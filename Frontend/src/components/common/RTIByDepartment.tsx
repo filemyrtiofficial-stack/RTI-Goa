@@ -7,7 +7,7 @@ interface RTIByDepartmentProps {
   state?: 'goa';
 }
 
-const RTIByDepartmentComponent: React.FC<RTIByDepartmentProps> = ({ state = 'goa' }) => {
+const RTIByDepartmentComponent: React.FC<RTIByDepartmentProps> = ({ state: _state = 'goa' }) => {
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

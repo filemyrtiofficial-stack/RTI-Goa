@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useDeferredValue } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useStateData } from '../hooks/useStateData';
 import { LazyChatbot } from '../components/common/LazyChatbot';
@@ -15,11 +15,9 @@ const KarnatakaTestimonialsSection = lazy(() => import('../components/karnataka/
 const KarnatakaWhySection = lazy(() => import('../components/karnataka/KarnatakaWhySection').then(m => ({ default: m.KarnatakaWhySection })));
 const KarnatakaClientsSection = lazy(() => import('../components/karnataka/KarnatakaClientsSection').then(m => ({ default: m.KarnatakaClientsSection })));
 const KarnatakaRTIPortalSection = lazy(() => import('../components/karnataka/KarnatakaRTIPortalSection').then(m => ({ default: m.KarnatakaRTIPortalSection })));
-const KarnatakaFeaturedSection = lazy(() => import('../components/karnataka/KarnatakaFeaturedSection').then(m => ({ default: m.KarnatakaFeaturedSection })));
 const KarnatakaGuidesSection = lazy(() => import('../components/karnataka/KarnatakaGuidesSection').then(m => ({ default: m.KarnatakaGuidesSection })));
 const KarnatakaDepartmentsSection = lazy(() => import('../components/karnataka/KarnatakaDepartmentsSection').then(m => ({ default: m.KarnatakaDepartmentsSection })));
 const KarnatakaFinalCTASection = lazy(() => import('../components/karnataka/KarnatakaFinalCTASection').then(m => ({ default: m.KarnatakaFinalCTASection })));
-const KarnatakaConsultationCTA = lazy(() => import('../components/karnataka/KarnatakaConsultationCTA').then(m => ({ default: m.KarnatakaConsultationCTA })));
 const KarnatakaFAQ = lazy(() => import('../components/karnataka/KarnatakaFAQ').then(m => ({ default: m.KarnatakaFAQ })));
 
 // ComponentLoader removed - using inline placeholders for better performance
@@ -27,9 +25,6 @@ const KarnatakaFAQ = lazy(() => import('../components/karnataka/KarnatakaFAQ').t
 export const Home: React.FC = () => {
   // Default to Goa for home page - always ensure we have data
   const { stateData, isLoading } = useStateData('karnataka');
-
-  // Defer non-critical state updates to reduce TBT
-  const deferredStateData = useDeferredValue(stateData);
 
   // Show minimal loading state only if no static data available
   if (isLoading && !stateData) {
@@ -73,7 +68,6 @@ export const Home: React.FC = () => {
   }
 
   // Use stateData for rendering (deferredStateData might be null initially)
-  const dataToUse = deferredStateData || stateData;
 
   // SEO Metadata - use current data
   const pageTitle = `File RTI Online in Goa - FileMyRTI`;
