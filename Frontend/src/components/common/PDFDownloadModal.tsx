@@ -214,35 +214,8 @@ export const PDFDownloadModal: React.FC<PDFDownloadModalProps> = ({
           downloadSuccess = true;
           console.log('Successfully opened PDF from public folder:', publicPath);
         } catch (publicError) {
-          console.log('Public folder download failed, trying direct import...', publicError);
+          console.log('Public folder download failed', publicError);
           lastError = publicError as Error;
-        }
-      }
-
-      // Approach 3: Try direct import (for development)
-      if (!downloadSuccess) {
-        try {
-          // Use dynamic import for Vite
-          const pdfModule = await import(`../../assets/PDF/${pdfPath}`);
-          const pdfUrl = pdfModule.default || pdfModule;
-          const downloadFilename = departmentName
-            .replace(/RTI\s+(Delhi|Telangana|Karnataka|Goa)\s+/gi, '')
-            .replace(/\s+/g, '_')
-            .concat('.pdf');
-
-          // Open PDF in new tab with proper filename
-          const link = document.createElement('a');
-          link.href = pdfUrl;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          link.download = downloadFilename;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          downloadSuccess = true;
-        } catch (importError) {
-          console.error('All download approaches failed:', importError);
-          lastError = importError as Error;
         }
       }
 
